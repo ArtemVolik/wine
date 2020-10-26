@@ -18,13 +18,9 @@ raw_data_from_excel.rename(
              'Акция': 'sale'}, inplace=True)
 goods_catalog = raw_data_from_excel.to_dict(orient='records')
 category_grouped_goods_catalog = defaultdict(list)
-for i in goods_catalog:
-    category_grouped_goods_catalog[i['category']].append(i)
+for good in goods_catalog:
+    category_grouped_goods_catalog[good['category']].append(good)
 
-"""jinja не дает перебрать словарь без преобразования типов данных указанного ниже, 
-category_grouped_goods_list - воспринимаеся каксписок и не дает доступа к значениям"""
-
-category_grouped_goods_dict = dict(category_grouped_goods_catalog)
 
 env = Environment(
     loader=FileSystemLoader('.'),
@@ -36,7 +32,7 @@ founded = datetime.today().year - 1920
 
 rendered_page = template.render(
     date=founded,
-    goods_dict=category_grouped_goods_dict
+    goods=category_grouped_goods_catalog
 )
 
 with open('index.html', 'w', encoding="utf8") as file:
