@@ -1,3 +1,5 @@
 .idea
 .vscode
 env/
+.Ds_Store
+.DS_Store
