@@ -16,15 +16,15 @@ raw_data_from_excel = pd.read_excel(args.file_path, keep_default_na=False)
 raw_data_from_excel.rename(
     columns={'Категория': 'category', 'Название': 'name', 'Сорт': 'sort', 'Цена': 'price', 'Картинка': 'image',
              'Акция': 'sale'}, inplace=True)
-goods_list = raw_data_from_excel.to_dict(orient='records')
-category_grouped_goods_list = defaultdict(list)
-for i in goods_list:
-    category_grouped_goods_list[i['category']].append(i)
+goods_catalog = raw_data_from_excel.to_dict(orient='records')
+category_grouped_goods_catalog = defaultdict(list)
+for i in goods_catalog:
+    category_grouped_goods_catalog[i['category']].append(i)
 
 """jinja не дает перебрать словарь без преобразования типов данных указанного ниже, 
 category_grouped_goods_list - воспринимаеся каксписок и не дает доступа к значениям"""
 
-category_grouped_goods_dict = dict(category_grouped_goods_list)
+category_grouped_goods_dict = dict(category_grouped_goods_catalog)
 
 env = Environment(
     loader=FileSystemLoader('.'),
